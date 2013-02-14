@@ -5,7 +5,8 @@ var express = require('express'),
     config = require('./private'),
     datamodel = require('./datamodel/')(mongoose),
     port = process.env.PORT || 3000,
-    app = express();
+    app = express(),
+    moduleName = 'Wardrobe.me';
 
 // general and webserver
 app.configure(function(){
@@ -19,8 +20,14 @@ app.configure(function(){
 mongoose.connect(config.creds.mongoose_auth);
 
 // REST API config
+//refactor APIs to use base url: /api/version/...
 require('./restapi/').insert(app, datamodel);
 
+//add web routes
+
+// ipsumImgProxy
+app.get('/ipsumImgProxy', require('./imgProxy'));
+
 http.createServer(app).listen(app.get('port'), function(){
-    console.log("Express server listening on port " + app.get('port'));
+    console.log('['+moduleName+'] Express server listening on port ' + app.get('port'));
 });

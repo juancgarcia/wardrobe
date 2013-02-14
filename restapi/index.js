@@ -56,6 +56,7 @@ function addResourceAction(config){
                 action.uri;
     var method = action.method(resourceFacade);
     expressApp[verb]( uri, method);
+    console.log('Verb['+verb+'] URI['+uri+'] Prefix['+apiConfig.prefix+'] Resource['+apiConfig.resource+']');
 }
 
 exports.insert = insert;

@@ -3,11 +3,14 @@
     var article = require('./datamodel/article')(mongoose);
 */
 
+var metaBase = require('../public/js/datamodel/article');
+
 module.exports = function(mongoose){
     var article = {};
     
     article.schema = new mongoose.Schema({
-        name: String
+        name: String,
+        color: String
     });    
     
     article.schema.methods.wear = function () {
@@ -17,19 +20,7 @@ module.exports = function(mongoose){
         console.log(title);
     };
     
-    article.model = mongoose.model('Article', article.schema);    
-    
-    article.methods = {};
-    article.methods.findById = function(req, res) {
-        var id = req.params.id;
-        console.log('Retrieving article: ' + id);
-        article.model.find({id: id}, function(err, collection) {
-            if(err){
-              console.log('error finding by id: '+ JSON.stringify(err));
-            }
-            res.send(collection);
-        });
-    };
+    article.model = mongoose.model('Article', article.schema);
     
     return article;
 }
